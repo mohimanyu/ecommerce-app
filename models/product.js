@@ -1,11 +1,10 @@
 const fs = require("fs");
 const path = require("path");
 
-const p = path.join(
-    path.dirname(process.mainModule.filename),
-    "data",
-    "products.json"
-);
+const p = path.join("data", "products.json");
+
+const MIN_ID = 1;
+const MAX_ID = 1000;
 
 const getProductsFromFile = (cb) => {
     fs.readFile(p, (err, fileContent) => {
@@ -26,6 +25,9 @@ module.exports = class Product {
     }
 
     save() {
+        this.id = Math.floor(
+            Math.random() * (MAX_ID - MIN_ID + 1) + MIN_ID
+        ).toString();
         getProductsFromFile((products) => {
             products.push(this);
             fs.writeFile(p, JSON.stringify(products), (err) => {
@@ -36,5 +38,12 @@ module.exports = class Product {
 
     static fetchAll(cb) {
         getProductsFromFile(cb);
+    }
+
+    static findById(id, cb) {
+        getProductsFromFile((products) => {
+            const product = products.find((prod) => prod.id === id);
+            cb(product);
+        });
     }
 };

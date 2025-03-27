@@ -1,1 +1,23 @@
-[{"title":"Harry Porter","imageUrl":"https://picsum.photos/200/300","price":"20.99","description":"This is a great book."}]
+[
+    {
+        "title": "Hobbit",
+        "imageUrl": "https://picsum.photos/200/300",
+        "price": "40.99",
+        "description": "Adventure, thriller combination",
+        "id": "514"
+    },
+    {
+        "title": "Harry Porter",
+        "imageUrl": "https://picsum.photos/200/300",
+        "price": "20.99",
+        "description": "Magic, thriller adoption",
+        "id": "822"
+    },
+    {
+        "title": "Reacher",
+        "imageUrl": "https://picsum.photos/200/300",
+        "price": "10.99",
+        "description": "Action, suspense genre",
+        "id": "772"
+    }
+]
