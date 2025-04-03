@@ -1,6 +1,45 @@
 <%- include('../includes/head.ejs') %>
 
 <body>
-    <%- include('../includes/navigation.ejs') %> <%-
-    include('../includes/end.ejs') %>
+    <%- include('../includes/navigation.ejs') %>
+    <main>
+        <% if (prods.products.length > 0) { %>
+        <div class="grid">
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Qty</th>
+                </tr>
+                <% for (let product of prods.products) { %>
+                <tr>
+                    <td><%= product.id %></td>
+                    <td><%= product.qty %></td>
+                    <td>
+                        <form action="/delete-item" method="post">
+                            <input
+                                type="hidden"
+                                name="productId"
+                                value="<%= product.id %>"
+                            />
+                            <input
+                                type="hidden"
+                                name="productPrice"
+                                value="<%= product.price %>"
+                            />
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                <% } %>
+                <tr>
+                    <td>Total -</td>
+                    <td><%= prods.totalPrice %></td>
+                </tr>
+            </table>
+        </div>
+        <% } else { %>
+        <h1>No Products in Cart!</h1>
+        <% } %>
+    </main>
+    <%- include('../includes/end.ejs') %>
 </body>
