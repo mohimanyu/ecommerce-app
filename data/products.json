@@ -1,1 +1,37 @@
-[{"id":"888","title":"Hobbit","imageUrl":"https://picsum.photos/200/300","price":"35.20","description":"Adventure, history"},{"id":"662","title":"Frozen","imageUrl":"https://picsum.photos/200/300","price":"20.20","description":"Animated, romance"}]
+[
+    {
+        "id": "662",
+        "title": "Frozen",
+        "imageUrl": "https://picsum.photos/200/300",
+        "price": "20.20",
+        "description": "Animated, romance"
+    },
+    {
+        "id": "663",
+        "title": "Toy Story",
+        "imageUrl": "https://picsum.photos/200/301",
+        "price": "18.50",
+        "description": "Animated, adventure, comedy"
+    },
+    {
+        "id": "664",
+        "title": "The Lion King",
+        "imageUrl": "https://picsum.photos/200/302",
+        "price": "22.75",
+        "description": "Animated, drama"
+    },
+    {
+        "id": "665",
+        "title": "Finding Nemo",
+        "imageUrl": "https://picsum.photos/200/303",
+        "price": "19.99",
+        "description": "Animated, adventure, family"
+    },
+    {
+        "id": "666",
+        "title": "Shrek",
+        "imageUrl": "https://picsum.photos/200/304",
+        "price": "21.00",
+        "description": "Animated, comedy, fantasy"
+    }
+]

@@ -1,5 +1,6 @@
 const fs = require("fs");
-const { cartPath, productsPath } = require("../util/customPaths");
+const Cart = require("./cart");
+const { productsPath } = require("../util/customPaths");
 const { getProductsFromFile } = require("../util/getProductFromFile");
 
 const MIN_ID = 1;
@@ -39,49 +40,21 @@ module.exports = class Product {
     }
 
     static deleteById(id) {
-        getProductsFromFile(cartPath, (cartProducts) => {
-            const productExistsInCart = cartProducts.products.find(
-                (prod) => prod.id === id
+        getProductsFromFile(productsPath, (products) => {
+            const product = products.filter((prod) => prod.id === id);
+            const filteredProducts = products.filter((prod) => prod.id !== id);
+            fs.writeFile(
+                productsPath,
+                JSON.stringify(filteredProducts),
+                (err) => {
+                    if (err) {
+                        console.log(err);
+                        return;
+                    } else {
+                        Cart.deleteProduct(id, product.price);
+                    }
+                }
             );
-            // deleting from cart first
-            if (productExistsInCart) {
-                const updatedCartProducts = cartProducts.products.filter(
-                    (prod) => prod.id !== id
-                );
-                getProductsFromFile(productsPath, (products) => {
-                    const productPrice = products.find(
-                        (prod) => prod.id === id
-                    ).price;
-                    const updatedCartTotalPrice =
-                        cartProducts.totalPrice -
-                        productPrice * productExistsInCart.qty;
-                    const updatedCart = {
-                        products: updatedCartProducts,
-                        totalPrice: updatedCartTotalPrice,
-                    };
-                    fs.writeFile(
-                        cartPath,
-                        JSON.stringify(updatedCart),
-                        (err) => {
-                            console.log(err);
-                        }
-                    );
-                    // delete from products
-                    const filteredProducts = products.filter(
-                        (prod) => prod.id !== id
-                    );
-                    fs.writeFile(
-                        productsPath,
-                        JSON.stringify(filteredProducts),
-                        (err) => {
-                            if (err) {
-                                console.log(err);
-                                return;
-                            }
-                        }
-                    );
-                });
-            }
         });
     }
 

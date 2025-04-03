@@ -9,11 +9,13 @@
                 <tr>
                     <th>ID</th>
                     <th>Qty</th>
+                    <th>Price</th>
                 </tr>
                 <% for (let product of prods.products) { %>
                 <tr>
                     <td><%= product.id %></td>
                     <td><%= product.qty %></td>
+                    <td><%= product.price %></td>
                     <td>
                         <form action="/delete-item" method="post">
                             <input
