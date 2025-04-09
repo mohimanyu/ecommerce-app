@@ -1,6 +1,6 @@
 const fs = require("fs");
-const { cartPath } = require("../util/customPaths");
-const { getProductsFromFile } = require("../util/getProductFromFile");
+const { cartPath } = require("../../util/customPaths");
+const { getProductsFromFile } = require("../../util/getProductFromFile");
 
 module.exports = class Cart {
     static addProduct(id, productPrice) {
@@ -18,6 +18,7 @@ module.exports = class Cart {
             );
             const existingProduct = cart.products[existingProductIndex];
 
+            // structuring the cart
             let updatedProduct;
             if (existingProduct) {
                 updatedProduct = { ...existingProduct };
@@ -38,13 +39,10 @@ module.exports = class Cart {
     }
 
     static deleteProduct(id, productPrice) {
-        fs.readFile(cartPath, (err, fileContent) => {
-            if (err) {
-                console.log(err);
-                return;
-            }
-            const cart = JSON.parse(fileContent);
+        getProductsFromFile(cartPath, (cart) => {
             const deletedItem = cart.products.find((prod) => prod.id === id);
+
+            // if item present in cart
             if (deletedItem) {
                 const updatedTotalPrice = Math.round(
                     cart.totalPrice - deletedItem.qty * productPrice,
@@ -53,10 +51,12 @@ module.exports = class Cart {
                 const filteredCartProducts = cart.products.filter(
                     (prod) => prod.id !== id
                 );
+
                 const updatedCart = {
                     products: filteredCartProducts,
                     totalPrice: updatedTotalPrice,
                 };
+
                 fs.writeFile(cartPath, JSON.stringify(updatedCart), (err) => {
                     console.log(err);
                 });

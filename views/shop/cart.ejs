@@ -3,18 +3,18 @@
 <body>
     <%- include('../includes/navigation.ejs') %>
     <main>
-        <% if (prods.products.length > 0) { %>
+        <% if (prods.length > 0) { %>
         <div class="grid">
             <table>
                 <tr>
-                    <th>ID</th>
+                    <th>Title</th>
                     <th>Qty</th>
                     <th>Price</th>
                 </tr>
-                <% for (let product of prods.products) { %>
+                <% for (let product of prods) { %>
                 <tr>
-                    <td><%= product.id %></td>
-                    <td><%= product.qty %></td>
+                    <td><%= product.title %></td>
+                    <td><%= product.cartItem.quantity %></td>
                     <td><%= product.price %></td>
                     <td>
                         <form action="/delete-item" method="post">
@@ -28,7 +28,7 @@
                                 name="productPrice"
                                 value="<%= product.price %>"
                             />
-                            <button type="submit">Delete</button>
+                            <button type="submit" class="btn">Delete</button>
                         </form>
                     </td>
                 </tr>
@@ -39,6 +39,10 @@
                 </tr>
             </table>
         </div>
+        <hr />
+        <form action="/create-order" method="post" class="centered">
+            <button type="submit" class="btn">Checkout</button>
+        </form>
         <% } else { %>
         <h1>No Products in Cart!</h1>
         <% } %>

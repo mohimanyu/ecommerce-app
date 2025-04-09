@@ -1,7 +1,7 @@
 const fs = require("fs");
 const Cart = require("./cart");
-const { productsPath } = require("../util/customPaths");
-const { getProductsFromFile } = require("../util/getProductFromFile");
+const { productsPath } = require("../../util/customPaths");
+const { getProductsFromFile } = require("../../util/getProductFromFile");
 
 const MIN_ID = 1;
 const MAX_ID = 1000;
@@ -17,6 +17,7 @@ module.exports = class Product {
 
     save() {
         getProductsFromFile(productsPath, (products) => {
+            // for editing existing product
             if (this.id) {
                 const existingProductIndex = products.findIndex(
                     (prod) => prod.id === this.id
@@ -39,7 +40,7 @@ module.exports = class Product {
         });
     }
 
-    static deleteById(id) {
+    static deleteById(id, cb) {
         getProductsFromFile(productsPath, (products) => {
             const product = products.filter((prod) => prod.id === id);
             const filteredProducts = products.filter((prod) => prod.id !== id);
@@ -51,6 +52,7 @@ module.exports = class Product {
                         console.log(err);
                         return;
                     } else {
+                        // deleting from cart if product is added
                         Cart.deleteProduct(id, product.price);
                     }
                 }

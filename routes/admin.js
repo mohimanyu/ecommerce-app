@@ -2,7 +2,8 @@ const path = require("path");
 
 const express = require("express");
 
-const adminController = require("../controllers/admin");
+// const adminController = require("../controllers/fileBased/admin");
+const adminController = require("../controllers/dbBased/admin");
 
 const router = express.Router();
 

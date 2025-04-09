@@ -1,5 +1,5 @@
-const Product = require("../models/product");
-const { getProductDetails } = require("../util/getProductDetails");
+const Product = require("../../models/usingFileSystem/product");
+const { getProductDetails } = require("../../util/getProductDetails");
 
 exports.getAddProduct = (req, res, next) => {
     res.render("admin/edit-product", {
