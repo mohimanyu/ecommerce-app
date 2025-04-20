@@ -13,7 +13,18 @@ exports.getProducts = (req, res, next) => {
     //     .catch((err) => {
     //         console.log(err);
     //     });
-    Product.findAll()
+    // Product.findAll()
+    //     .then((products) => {
+    //         res.render("shop/product-list", {
+    //             prods: products,
+    //             pageTitle: "Products",
+    //             path: "/products",
+    //         });
+    //     })
+    //     .catch((err) => {
+    //         console.log(err);
+    //     });
+    Product.fetchAll()
         .then((products) => {
             res.render("shop/product-list", {
                 prods: products,
@@ -39,7 +50,8 @@ exports.getProduct = (req, res, next) => {
     //     .catch((err) => {
     //         console.log(err);
     //     });
-    Product.findByPk(prodId)
+    // Product.findByPk(prodId)
+    Product.findById(prodId)
         .then((result) => {
             res.render("shop/product-detail", {
                 product: result,
@@ -64,7 +76,8 @@ exports.getIndex = (req, res, next) => {
     //     .catch((err) => {
     //         console.log(err);
     //     });
-    Product.findAll()
+    // Product.findAll()
+    Product.fetchAll()
         .then((products) => {
             res.render("shop/index", {
                 prods: products,

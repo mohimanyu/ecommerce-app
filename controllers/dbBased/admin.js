@@ -1,4 +1,3 @@
-const { Where } = require("sequelize/lib/utils");
 const Product = require("../../models/usingDatabase/product");
 const { getProductDetails } = require("../../util/getProductDetails");
 
@@ -27,14 +26,29 @@ exports.postAddProduct = (req, res, next) => {
     //     .catch((err) => {
     //         console.log(err);
     //     });
-    req.user
-        .createProduct({
-            title: productDetails.title,
-            imageUrl: productDetails.imageUrl,
-            price: productDetails.price,
-            description: productDetails.description,
-        })
+    // req.user
+    //     .createProduct({
+    //         title: productDetails.title,
+    //         imageUrl: productDetails.imageUrl,
+    //         price: productDetails.price,
+    //         description: productDetails.description,
+    //     })
+    //     .then(() => {
+    //         res.redirect("/admin/products");
+    //     })
+    //     .catch((err) => {
+    //         console.log(err);
+    //     });
+    const product = new Product(
+        productDetails.title,
+        productDetails.price,
+        productDetails.imageUrl,
+        productDetails.description
+    );
+    product
+        .save()
         .then(() => {
+            console.log("Created Product");
             res.redirect("/admin/products");
         })
         .catch((err) => {
@@ -54,7 +68,8 @@ exports.getEditProduct = (req, res, next) => {
     //         path: "admin/admin-products",
     //     });
     // });
-    Product.findByPk(productId).then((product) => {
+    // Product.findByPk(productId)
+    Product.findById(productId).then((product) => {
         if (!product) {
             return res.redirect("/");
         }
@@ -75,14 +90,25 @@ exports.postEditProduct = (req, res, next) => {
     //     productDetails.price,
     //     productDetails.description
     // );
-    Product.findByPk(productDetails.id)
-        .then((product) => {
-            product.title = productDetails.title;
-            product.imageUrl = productDetails.imageUrl;
-            product.price = productDetails.price;
-            product.description = productDetails.description;
-            return product.save();
-        })
+    // Product.findByPk(productDetails.id)
+    // Product.findById(productDetails.id)
+    //     .then((product) => {
+    //         product.title = productDetails.title;
+    //         product.imageUrl = productDetails.imageUrl;
+    //         product.price = productDetails.price;
+    //         product.description = productDetails.description;
+    //         return product.save();
+    //     })
+
+    const product = new Product(
+        productDetails.title,
+        productDetails.price,
+        productDetails.imageUrl,
+        productDetails.description,
+        productDetails.id
+    );
+    product
+        .save()
         .then(() => {
             res.redirect("/admin/products");
         })
@@ -94,11 +120,12 @@ exports.postEditProduct = (req, res, next) => {
 exports.deleteProduct = (req, res, next) => {
     const productId = req.body.id;
 
-    Product.destroy({
-        where: {
-            id: productId,
-        },
-    })
+    // Product.destroy({
+    //     where: {
+    //         id: productId,
+    //     },
+    // })
+    Product.deleteById(productId)
         .then(() => {
             res.redirect("/admin/products");
         })
@@ -117,8 +144,9 @@ exports.getProducts = (req, res, next) => {
     // });
 
     // Product.findAll()
-    req.user
-        .getProducts()
+    // req.user
+    //     .getProducts()
+    Product.fetchAll()
         .then((products) => {
             res.render("admin/products", {
                 prods: products,
